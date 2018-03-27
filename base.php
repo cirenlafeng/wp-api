@@ -16,7 +16,7 @@ $dsn="$dbms:host=$host;dbname=$dbName";
 
 try {
     $pdo = new PDO($dsn, $user, $pass); //初始化PDO
-
+    $pdo->query('set names utf8;');
 } catch (PDOException $e) {
     die ("Error!: can not find database");
 }
