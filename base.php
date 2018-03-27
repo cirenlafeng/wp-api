@@ -1,6 +1,6 @@
 <?php
 //引入配置文件
-@include_once dirname(__DIR__).'\wp-config.php';
+@include_once dirname(__DIR__).'/wp-config.php';
 
 $dbms='mysql';     //数据库类型
 $host=DB_HOST; //数据库主机名

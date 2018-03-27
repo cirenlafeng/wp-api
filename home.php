@@ -25,6 +25,9 @@ $ids = $pdo->query("SELECT * FROM $table_option WHERE option_name = 'banner_cust
 if($ids)
 {
 	$carousel = $pdo->query("SELECT {$field} FROM $table_post WHERE ID IN({$ids['option_value']}) ORDER BY ID desc LIMIT {$carouselLimit}")->fetchAll(PDO::FETCH_ASSOC);
+   foreach ($carousel as $skey => $svalue) {
+      $carousel[$skey]['first_img'] = catch_that_image($svalue['post_content']);
+   }
 }else{
 	$carousel = null;
 }
