@@ -1,5 +1,6 @@
 <?php
 header("Content-type:application/json");
+error_reporting(E_ALL);
 @include_once dirname(__DIR__).'\base.php';
 
 
