@@ -1,8 +1,7 @@
 <?php
 header("Content-type:application/json");
-error_reporting(E_ALL);
-ini_set('display_errors','On');
-@include_once dirname(__DIR__).'\base.php';
+
+@include_once 'base.php';
 
 
 $carouselLimit = 5;

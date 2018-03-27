@@ -1,6 +1,7 @@
 <?php
 header("Content-type:application/json");
-@include_once dirname(__DIR__).'\base.php';
+
+@include_once 'base.php';
 
 if(isset($_GET['ID']))
 {
