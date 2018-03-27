@@ -31,7 +31,7 @@ $data['helped'] = gethelped($post['ID']);
 $data['unhelped'] = getUnHelped($post['ID']);
 $data['RecommendArticles'] = getRecommendArticles($post['ID']);
 
-exit(json_encode(['status'=>200,'info'=>'success','data'=>$data]));
+echo json_encode(['status'=>200,'info'=>'success','data'=>$data]);
 
 function getAuthor($authorId)
 {

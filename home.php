@@ -41,8 +41,7 @@ $data = [];
 $data['carousel'] = $carousel;
 $data['posts'] = $posts;
 $data['postsCount'] = $count['count'];
-echo 123;
-exit(json_encode(['status'=>200,'info'=>'success','data'=>$data]));
+echo json_encode(['status'=>200,'info'=>'success','data'=>$data]);
 
 function catch_that_image($post_content) {
    $first_img = '';
