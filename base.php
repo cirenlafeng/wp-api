@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //引入配置文件
 @include_once dirname(__DIR__).'/wp-config.php';
 
