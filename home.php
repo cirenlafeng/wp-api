@@ -17,6 +17,17 @@ if(isset($_GET['postLimit']))
 	$postLimit = (int) trim($_GET['postLimit']);
 }
 
+function catch_that_image($post_content) {
+   $first_img = '';
+   ob_start();
+   ob_end_clean();
+   $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches);
+   $first_img = '';
+   if(empty($matches[1])) $first_img = "";
+   else $first_img = $matches [1][0];
+   return $first_img;
+}
+
 $table_post = $table_prefix.'posts';
 $table_option = $table_prefix.'options';
 $field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`';
@@ -43,13 +54,4 @@ $data['posts'] = $posts;
 $data['postsCount'] = $count['count'];
 echo json_encode(['status'=>200,'info'=>'success','data'=>$data]);
 
-function catch_that_image($post_content) {
-   $first_img = '';
-   ob_start();
-   ob_end_clean();
-   $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches);
-   $first_img = '';
-   if(empty($matches[1])) $first_img = "";
-   else $first_img = $matches [1][0];
-   return $first_img;
-}
+
