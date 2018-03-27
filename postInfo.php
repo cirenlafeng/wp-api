@@ -118,8 +118,22 @@ function getRecommendArticles($ID)
 	if($ps = $pdo->query("SELECT $field FROM $table_post WHERE ID IN ({$Ids}) LIMIT 5"))
 	{
 		$posts = $ps->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($posts as $key => $value) {
+			$posts[$key]['first_img'] = catch_that_image($value['post_content']);
+		}
 	}else{
 		$posts = (object) [];
 	}
 	return $posts;
+}
+
+function catch_that_image($post_content) {
+   $first_img = '';
+   ob_start();
+   ob_end_clean();
+   $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches);
+   $first_img = '';
+   if(empty($matches[1])) $first_img = "";
+   else $first_img = $matches [1][0];
+   return $first_img;
 }
