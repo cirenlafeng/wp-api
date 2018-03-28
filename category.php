@@ -46,7 +46,7 @@ foreach ($row as $key => $value) {
 	$tagIds.= ','.$value['object_id'];
 }
 $tagIds = trim($tagIds,',');
-if($row = $pdo->query("SELECT $field FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='inherit' OR post_status='publish') ORDER BY ID desc LIMIT {$postOffset},{$postLimit}"))
+if($row = $pdo->query("SELECT $field FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='publish') ORDER BY ID desc LIMIT {$postOffset},{$postLimit}"))
 {
 	$posts = $row->fetchAll(PDO::FETCH_ASSOC);
 }else{
@@ -55,7 +55,7 @@ if($row = $pdo->query("SELECT $field FROM $table_post WHERE ID IN ({$tagIds}) AN
 foreach ($posts as $key => $value) {
 	$posts[$key]['first_img'] = catch_that_image($value['post_content']);
 }
-$count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='inherit' OR post_status='publish')")->fetch(PDO::FETCH_ASSOC);
+$count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='publish')")->fetch(PDO::FETCH_ASSOC);
 $data = [];
 $data['posts'] = $posts;
 $data['postsCount'] = (int) $count['count'];

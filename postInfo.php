@@ -20,7 +20,7 @@ $table_term_taxonomy = $table_prefix.'term_taxonomy';
 $field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`,`post_author`';
 
 
-$post = $pdo->query("SELECT {$field} FROM $table_post WHERE ID={$ID} AND (post_status='inherit' OR post_status='publish') LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+$post = $pdo->query("SELECT {$field} FROM $table_post WHERE ID={$ID} AND (post_status='publish') LIMIT 1")->fetch(PDO::FETCH_ASSOC);
 
 $data = [];
 $data['post'] = $post;
