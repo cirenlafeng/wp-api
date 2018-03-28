@@ -51,7 +51,7 @@ foreach ($posts as $key => $value) {
 $data = [];
 $data['carousel'] = $carousel;
 $data['posts'] = $posts;
-$data['postsCount'] = $count['count'];
+$data['postsCount'] = (int) $count['count'];
 echo json_encode(['status'=>200,'info'=>'success','data'=>$data]);
 
 
