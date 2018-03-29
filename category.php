@@ -54,6 +54,7 @@ if($row = $pdo->query("SELECT $field FROM $table_post WHERE ID IN ({$tagIds}) AN
 }
 foreach ($posts as $key => $value) {
 	$posts[$key]['first_img'] = catch_that_image($value['post_content']);
+	unset($posts[$key]['post_content']);
 }
 $count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='publish')")->fetch(PDO::FETCH_ASSOC);
 $data = [];

@@ -47,6 +47,7 @@ $posts = $pdo->query("SELECT {$field} FROM $table_post WHERE (post_status='publi
 $count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE (post_status='publish')")->fetch(PDO::FETCH_ASSOC);
 foreach ($posts as $key => $value) {
 	$posts[$key]['first_img'] = catch_that_image($value['post_content']);
+   unset($posts[$key]['post_content']);
 }
 $data = [];
 $data['carousel'] = $carousel;
