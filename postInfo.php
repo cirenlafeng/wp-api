@@ -42,13 +42,21 @@ function getAuthor($authorId)
 
 function getTags($ID)
 {
-	global $table_tag,$pdo,$table_tag_relationships;
+	global $table_tag,$pdo,$table_tag_relationships,$table_term_taxonomy;
 	$tags = $pdo->query("SELECT * FROM $table_tag_relationships WHERE object_id={$ID}")->fetchAll(PDO::FETCH_ASSOC);
 	$tagIds = '';
 	foreach ($tags as $key => $value) {
 		$tagIds.= ','.$value['term_taxonomy_id'];
 	}
 	$tagIds = trim($tagIds,',');
+
+	$tags = $pdo->query("SELECT * FROM $table_term_taxonomy WHERE term_taxonomy_id IN ({$tagIds}) AND taxonomy='post_tag' ")->fetchAll(PDO::FETCH_ASSOC);
+	$tagIds = '';
+	foreach ($tags as $key => $value) {
+		$tagIds.= ','.$value['term_taxonomy_id'];
+	}
+	$tagIds = trim($tagIds,',');
+
 	if($row = $pdo->query("SELECT * FROM $table_tag WHERE term_id IN ({$tagIds})"))
 	{
 		$tagObj = $row->fetchAll(PDO::FETCH_ASSOC);
@@ -123,6 +131,9 @@ function getRecommendArticles($ID)
 		}
 	}else{
 		$posts = (object) [];
+	}
+	foreach ($posts as $key => $value) {
+		unset($posts[$key]['post_content']);
 	}
 	return $posts;
 }
