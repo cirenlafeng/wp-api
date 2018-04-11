@@ -8,23 +8,23 @@ $post_id = 0;
 $type = 1;
 //类型默认1:有帮助，2没有帮助
 
-if(isset($_GET['device_id']))
+if(isset($_POST['device_id']))
 {
-	$device_id = (string) trim($_GET['device_id']);
+	$device_id = (string) trim($_POST['device_id']);
 }else{
 	exit(json_encode(['status'=>400,'info'=>'error','data'=>'need device_id']));
 }
 
-if(isset($_GET['post_id']))
+if(isset($_POST['post_id']))
 {
-	$post_id = (int) trim($_GET['post_id']);
+	$post_id = (int) trim($_POST['post_id']);
 }else{
 	exit(json_encode(['status'=>400,'info'=>'error','data'=>'need post_id']));
 }
 
-if(isset($_GET['type']))
+if(isset($_POST['type']))
 {
-	$type = (int) trim($_GET['type']);
+	$type = (int) trim($_POST['type']);
 }
 
 $checkIsSet = $pdo->query("SELECT * FROM `wp_posts_helped` WHERE post_id = $post_id AND device_id='{$device_id}'")->fetch(PDO::FETCH_ASSOC);
