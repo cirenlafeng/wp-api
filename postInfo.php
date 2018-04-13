@@ -127,7 +127,7 @@ function getRecommendArticles($ID)
 	{
 		$posts = $ps->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($posts as $key => $value) {
-			$posts[$key]['first_img'] = catch_that_image($value['post_content']);
+			$posts[$key]['first_img'] = catch_that_image($value['ID']);
 		}
 	}else{
 		$posts = (object) [];
@@ -138,13 +138,19 @@ function getRecommendArticles($ID)
 	return $posts;
 }
 
-function catch_that_image($post_content) {
-   $first_img = '';
-   ob_start();
-   ob_end_clean();
-   $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_content, $matches);
-   $first_img = '';
-   if(empty($matches[1])) $first_img = "";
-   else $first_img = $matches [1][0];
-   return $first_img;
+function catch_that_image($post_id) {
+   global $pdo,$table_postmeta,$table_post;
+   $row = $pdo->query("SELECT * FROM $table_postmeta WHERE `post_id` = $post_id AND `meta_key` = '_thumbnail_id' Limit 1;")->fetch(PDO::FETCH_ASSOC);
+   if($row)
+   {
+      $row2 = $pdo->query("SELECT * FROM $table_post WHERE `ID` = {$row['meta_value']} Limit 1;")->fetch(PDO::FETCH_ASSOC);
+      if($row2)
+      {
+         return $row2['guid'];
+      }else{
+         return "";
+      }
+   }else{
+      return "";
+   }
 }
