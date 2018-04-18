@@ -1,7 +1,7 @@
 <?php
 header("Content-type:application/json;charset=utf-8");
-error_reporting(-1);
-ini_set('display_errors', 1);
+// error_reporting(-1);
+// ini_set('display_errors', 1);
 @include_once 'base.php';
 
 $postOffset = 0;
@@ -66,7 +66,14 @@ foreach ($posts as $key => $value) {
 	$posts[$key]['first_img'] = catch_that_image($value['ID']);
 	unset($posts[$key]['post_content']);
 }
-$count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='publish')")->fetch(PDO::FETCH_ASSOC);
+$count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE ID IN ({$tagIds}) AND (post_status='publish')");
+if($count)
+{
+   $count = $count->fetch(PDO::FETCH_ASSOC);
+}else{
+   $count = [];
+   $count['count'] = 0;
+}
 $data = [];
 $data['posts'] = $posts;
 $data['postsCount'] = (int) $count['count'];
