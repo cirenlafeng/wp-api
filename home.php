@@ -1,7 +1,7 @@
 ﻿<?php
 header("Content-type:application/json;charset=utf-8");
-error_reporting(-1);
-ini_set('display_errors', 1);
+// error_reporting(-1);
+// ini_set('display_errors', 1);
 @include_once 'base.php';
 
 
@@ -45,7 +45,14 @@ function catch_that_image($post_id) {
 $ids = $pdo->query("SELECT * FROM $table_option WHERE option_name = 'banner_custom_ids' Limit 1;")->fetch(PDO::FETCH_ASSOC);
 if($ids)
 {
-	$carousel = $pdo->query("SELECT {$field} FROM $table_post WHERE ID IN({$ids['option_value']}) ORDER BY ID desc LIMIT {$carouselLimit}")->fetchAll(PDO::FETCH_ASSOC);
+   $ids['option_value'] = str_replace(" ", "", $ids['option_value']);
+	$carousel = $pdo->query("SELECT {$field} FROM $table_post WHERE ID IN({$ids['option_value']}) ORDER BY ID desc LIMIT {$carouselLimit}");
+   if($carousel)
+   {
+      $carousel = $carousel->fetchAll(PDO::FETCH_ASSOC);
+   }else{
+      $carousel = null;
+   }
    foreach ($carousel as $skey => $svalue) {
       $carousel[$skey]['first_img'] = catch_that_image($svalue['ID']);
    }
