@@ -46,6 +46,7 @@ $ids = $pdo->query("SELECT * FROM $table_option WHERE option_name = 'banner_cust
 if($ids)
 {
    $ids['option_value'] = str_replace(" ", "", $ids['option_value']);
+   $ids['option_value'] = trim($ids['option_value'],',');
 	$carousel = $pdo->query("SELECT {$field} FROM $table_post WHERE ID IN({$ids['option_value']}) ORDER BY ID desc LIMIT {$carouselLimit}");
    if($carousel)
    {
