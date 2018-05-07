@@ -5,7 +5,7 @@ header("Content-type:application/json;charset=utf-8");
 
 $postOffset = 0;
 $postLimit = 10;
-$uuid = '';
+$deviceId = '';
 $digital_currency = $table_prefix.'digital_currency';
 if(isset($_GET['offset']))
 {
@@ -17,26 +17,28 @@ if(isset($_GET['limit']))
 	$postLimit = (int) trim($_GET['limit']);
 }
 
-if(isset($_GET['uuid']))
+if(isset($_GET['deviceId']))
 {
-	$uuid = trim($_GET['uuid']);
+	$deviceId = trim($_GET['deviceId']);
 }
 
-if(empty($uuid))
+if(empty($deviceId))
 {
-	exit(json_encode(['status'=>400,'info'=>'error','data'=>'need uuid']));
+	exit(json_encode(['status'=>400,'info'=>'error','data'=>'need deviceId']));
 }
 
-$posts = $pdo->query("SELECT * FROM $digital_currency WHERE `uuid`='{$uuid}' ORDER BY id desc LIMIT {$postOffset},{$postLimit}");
+$posts = $pdo->query("SELECT * FROM $digital_currency WHERE `deviceId`='{$deviceId}' ORDER BY id desc LIMIT {$postOffset},{$postLimit}");
 if($posts)
 {
   $posts = $posts->fetchAll(PDO::FETCH_ASSOC);
 }else{
   $posts = null;
 }
-$count = $pdo->query("SELECT count(1) as `count` FROM $digital_currency WHERE `uuid`='{$uuid}'")->fetch(PDO::FETCH_ASSOC);
+$count = $pdo->query("SELECT count(1) as `count` FROM $digital_currency WHERE `deviceId`='{$deviceId}'")->fetch(PDO::FETCH_ASSOC);
 
-
+foreach ($posts as $key => $value) {
+	$posts[$key]['id'] = (int) $value['id'];
+}
 $data = [];
 $data['coinList'] = $posts;
 $data['listCount'] = (int) $count['count'];
