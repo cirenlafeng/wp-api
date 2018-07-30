@@ -22,7 +22,7 @@ if(isset($_GET['postLimit']))
 
 $table_post = $table_prefix.'posts';
 $table_option = $table_prefix.'options';
-$field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`';
+$field = '`ID`,`post_title`,`post_date_gmt`';
 $table_postmeta = $table_prefix.'postmeta';
 
 function catch_that_image($post_id) {
@@ -65,7 +65,7 @@ $posts = $pdo->query("SELECT {$field} FROM $table_post WHERE (post_status='publi
 $count = $pdo->query("SELECT count(1) as `count` FROM $table_post WHERE (post_status='publish')")->fetch(PDO::FETCH_ASSOC);
 foreach ($posts as $key => $value) {
 	$posts[$key]['first_img'] = catch_that_image($value['ID']);
-   unset($posts[$key]['post_content']);
+   // unset($posts[$key]['post_content']);
 }
 $data = [];
 $data['carousel'] = $carousel;

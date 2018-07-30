@@ -48,7 +48,7 @@ function catch_that_image($post_id) {
    }
 }
 
-$field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`';
+$field = '`ID`,`post_title`,`post_content`,`post_date_gmt`';
 
 $row = $pdo->query("SELECT * FROM $table_term_relationships WHERE term_taxonomy_id={$categoryId}")->fetchAll(PDO::FETCH_ASSOC);
 $tagIds = '';
