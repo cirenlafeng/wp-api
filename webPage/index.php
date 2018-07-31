@@ -12,12 +12,10 @@ if(isset($_GET['ID']))
    exit(json_encode(['status'=>400,'info'=>'error','data'=>'need post ID']));
 }
 
-
-if(isset($_GET['ID']))
+$userId = 0;
+if(isset($_GET['userId']))
 {
-   $ID = (int) trim($_GET['ID']);
-}else{
-   exit(json_encode(['status'=>400,'info'=>'error','data'=>'need post ID']));
+   $userId = (int) trim($_GET['userId']);
 }
 
 $table_post = $table_prefix.'posts';
@@ -168,17 +166,18 @@ function catch_that_image($post_id) {
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="keywords" content=""/>
-    <meta property="og:title" content="">
-    <meta property="og:type" content=""/>
-    <meta property="og:description" content="">
+    <meta name="keywords" content="BTC,Bitcoin"/>
+    <meta property="og:title" content="يتم توزيع ١٠٠ بيتكوين مجانا">
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="العرض متاح لعدد محدود من المستخدمين، سارع في استلام نصيبك قبل النفاذ">
     <meta property="og:image" content="https://cdn.arcoinonline.com/images/2018/06/09065532/share-s-upex.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+    <meta name="twitter:title" content="لماذا تصبح أحلامك مزعجة قبيل الدورة الشهرية">
+    <meta name="twitter:description" content="حادث تحطم حافلة، تذكر تفاصيل ا">
+    <meta name="twitter:image"
+          content="https://cdn-media-01.hayatapp.com/period/production/uploads/app_article_pgc/logo/57dff2d8201225d5eee1832c064b767d.jpg">
 
-    <title>芝麻开门</title>
+    <title><?php @echo $data['post']['post_title']; ?></title>
     <link rel="stylesheet" href="dist/css/application.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="dist/js/application.js"></script>
@@ -188,13 +187,13 @@ function catch_that_image($post_id) {
 <div class="home">
     <div class="details-section-wrap">
         <div id="details-section-wrap">
-            <h1 class="details-section-h1 bold">انسخ الرابط أدناه لدعوة من خلال الشبكات الرابط أدناه لدعوة من خلال</h1>
+            <h1 class="details-section-h1 bold"><?php @echo $data['post']['post_title']; ?></h1>
             <div class="head-wrap">
                 <img class="user-icon lazy"
                      src="dist/image/lazy-head-img.png"
                      data-original="https://yt3.ggpht.com/-SsPthNTlpnE/AAAAAAAAAAI/AAAAAAAAAAA/K1TGDVrueTo/s76-c-k-no-mo-rj-c0xffffff/photo.jpg"/>
                 <div class="user-name">
-                    <p>محظوظ</p>
+                    <p><?php @echo $data['author']['user_nicename']; ?></p>
                     <p class="time">445646</p>
                 </div>
                 <span class="read-user">123</span>
@@ -202,115 +201,77 @@ function catch_that_image($post_id) {
             </div>
             <!--正文部分 start-->
             <div class="container">
-                <p>انسخ الرابط أدناه لدعوة من خلال الشبكات الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ
-                    الرابط
-                    أدناه الشبكات الاجتماعية انسخ الرابط أدناه لدعوة من خلال الشبكات الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ
-                    الرابط
-                    أدناه
-                    لدعوة من خلال الشبكات الرابط أدناه لدعوة </p>
-                <img src="https://yt3.ggpht.com/-SsPthNTlpnE/AAAAAAAAAAI/AAAAAAAAAAA/K1TGDVrueTo/s76-c-k-no-mo-rj-c0xffffff/photo.jpg">
-                <p class="details-section-text">انسخ الرابط أدناه لدعوة من خلال الشبكات الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ
-                    الرابط
-                    أدناه الشبكات الاجتماعية انسخ الرابط أدناه لدعوة من خلال الشبكات الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ
-                    الرابط
-                    أدناه
-                    لدعوة من خلال الشبكات الرابط أدناه لدعوة </p>
+                <?php @echo $data['post']['post_content']; ?>
             </div>
             <!--正文部分 end-->
             <div class="now-btc-wrap">
-                <p class="now-btc"><span class="icon"></span>$468546.153</p>
+                <p class="now-btc"><span class="icon"></span>$<?php @echo $data['btc_price']; ?></p>
                 <p class="now-text">سعر البيتكوين في وقت النشر</p>
             </div>
         </div>
-        <div class="share-wrap">
-            <div class="icon_facebook"></div>
-            <div class="icon_twitter"></div>
-            <div class="icon_whatsapp"></div>
-            <div class="icon_telegram"></div>
-            <div class="icon_reddit"></div>
-            <div class="icon_share"></div>
-
+        <div class="app">
+            <div class="share-wrap ">
+                <div class="icon_facebook share"></div>
+                <div class="icon_twitter share"></div>
+                <div class="icon_whatsapp share"></div>
+                <div class="icon_telegram share"></div>
+                <div class="icon_reddit share"></div>
+                <div class="icon_share share"></div>
+            </div>
         </div>
-        <p class="share-text">شارك هذه المقالة مع أصدقائي</p>
-        <div class="good-wrap">
+        <p class="share-text app">شارك هذه المقالة مع أصدقائي</p>
+        <div class="good-wrap app">
             <span class="icon"></span><span>مثل</span>
         </div>
     </div>
     <div class="list-span">
         <h2 class="details-h2 bold">التصنيف</h2>
         <div class="span-box clear">
-            <span>ودي</span><span>ودي</span><span>ودي</span><span>ودي</span>
+            <?php
+                foreach ($data['tags'] as $key => $value) {
+            ?>
+                <span><?php echo $value['name']; ?></span>
+            <?php
+                }
+            ?>
         </div>
 
     </div>
     <div class="details-more-wrap">
         <h2 class="details-h2 bold">ﺔﻠﺼﻟﺍ ﺕﺍﺫ ﺔﻴﺻﻮﺘﻟﺍ</h2>
         <ul class="more-wrap">
+            <?php
+                foreach ($data['RecommendArticles'] as $key => $value) {
+            ?>
             <li class="clear">
-                <div class="more-wrap-img"
-                     style="background-image: url('https://yt3.ggpht.com/-tvYMSkpjt5U/AAAAAAAAAAI/AAAAAAAAAAA/oB11cDrfphI/s76-c-k-no-mo-rj-c0xffffff/photo.jpg')"></div>
-                <p class="more-wrap-text">الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ الرابطابطالرابط أدناه لدعوة من خلال الشبكات
-                    الاجتماعية انسخ الرابطابطالرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ الرابطابط</p>
-                <p class="more-wrap-time">2018-3-20</p>
+            <div class="more-wrap-img"
+                 style="background-image: url('<?php echo $value['first_img']; ?>')"></div>
+            <p class="more-wrap-text"><?php echo $value['post_title']; ?></p>
+            <p class="more-wrap-time"><?php echo $value['post_date_gmt']; ?></p>
             </li>
-            <li class="clear">
-                <div class="more-wrap-img"
-                     style="background-image: url('https://yt3.ggpht.com/-tvYMSkpjt5U/AAAAAAAAAAI/AAAAAAAAAAA/oB11cDrfphI/s76-c-k-no-mo-rj-c0xffffff/photo.jpg')"></div>
-                <p class="more-wrap-text">الرابط أدناه لدعوة من خلال الشبكات الاجتماعية انسخ الرابطابط</p>
-                <p class="more-wrap-time">2018-3-20</p>
-            </li>
+            <?php
+                }
+            ?>
+            
         </ul>
     </div>
-  <!--  <div class="details-bottom">
-        <div class="details-bottom-logo-wrap">
-            <div class="details-bottom-logo"></div>
-            <div class="details-bottom-text">افتحي Hayaa للمشاركة في المزيد من المواضيع النسائية</div>
-        </div>
-        <div class="details-bottom-button down-load">فتح</div>
-    </div>-->
+    <!--  <div class="details-bottom">
+          <div class="details-bottom-logo-wrap">
+              <div class="details-bottom-logo"></div>
+              <div class="details-bottom-text">افتحي Hayaa للمشاركة في المزيد من المواضيع النسائية</div>
+          </div>
+          <div class="details-bottom-button down-load">فتح</div>
+      </div>-->
 </div>
 <textarea id="copy" style="position: absolute;top:-111111px"></textarea>
 </body>
-<script>
-    //branch
-    (function (b, r, a, n, c, h, _, s, d, k) {
-        if (!b[n] || !b[n]._q) {
-            for (; s < _.length;) c(h, _[s++]);
-            d = r.createElement(a);
-            d.async = 1;
-            d.src = "https://cdn.branch.io/branch-latest.min.js";
-            k = r.getElementsByTagName(a)[0];
-            k.parentNode.insertBefore(d, k);
-            b[n] = h
-        }
-    })(window, document, "script", "branch", function (b, r) {
-        b[r] = function () {
-            b._q.push([r, arguments])
-        }
-    }, {
-        _q: [],
-        _v: 1
-    }, "addListener applyCode banner closeBanner creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode".split(" "), 0);
-    branch.init('key_live_foDTBchD29xuUb1TQu89alaprAnvMHjY');
-    branch.deepview(
-        {
-            'channel': 'wap',
-            'feature': 'wap',
-            data: {
-                'feature': 'wap'
-            }
-        }, {
-            'open_app': true
-        }
-    );
-</script>
 <script>
     $(function () {
         $(".lazy").lazyload({effect: "fadeIn"});
     })
 </script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105082350-2"></script>
+<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105082350-2"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -321,6 +282,6 @@ function catch_that_image($post_id) {
     gtag('js', new Date());
 
     gtag('config', 'UA-105082350-2');
-</script>
+</script>-->
 </html>
 
