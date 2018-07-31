@@ -177,7 +177,7 @@ function catch_that_image($post_id) {
     <meta name="twitter:image"
           content="https://cdn-media-01.hayatapp.com/period/production/uploads/app_article_pgc/logo/57dff2d8201225d5eee1832c064b767d.jpg">
 
-    <title><?php @echo $data['post']['post_title']; ?></title>
+    <title><?php echo isset($data['post']['post_title']) ? $data['post']['post_title'] : ''; ?></title>
     <link rel="stylesheet" href="dist/css/application.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="dist/js/application.js"></script>
@@ -187,13 +187,13 @@ function catch_that_image($post_id) {
 <div class="home">
     <div class="details-section-wrap">
         <div id="details-section-wrap">
-            <h1 class="details-section-h1 bold"><?php @echo $data['post']['post_title']; ?></h1>
+            <h1 class="details-section-h1 bold"><?php echo isset($data['post']['post_title']) ? $data['post']['post_title'] : ''; ?></h1>
             <div class="head-wrap">
                 <img class="user-icon lazy"
                      src="dist/image/lazy-head-img.png"
                      data-original="https://yt3.ggpht.com/-SsPthNTlpnE/AAAAAAAAAAI/AAAAAAAAAAA/K1TGDVrueTo/s76-c-k-no-mo-rj-c0xffffff/photo.jpg"/>
                 <div class="user-name">
-                    <p><?php @echo $data['author']['user_nicename']; ?></p>
+                    <p><?php echo isset($data['author']['user_nicename']) ? $data['author']['user_nicename'] : ''; ?></p>
                     <p class="time">445646</p>
                 </div>
                 <span class="read-user">123</span>
@@ -201,11 +201,11 @@ function catch_that_image($post_id) {
             </div>
             <!--正文部分 start-->
             <div class="container">
-                <?php @echo $data['post']['post_content']; ?>
+                <?php echo isset($data['post']['post_content']) ? $data['post']['post_content'] : ''; ?>
             </div>
             <!--正文部分 end-->
             <div class="now-btc-wrap">
-                <p class="now-btc"><span class="icon"></span>$<?php @echo $data['btc_price']; ?></p>
+                <p class="now-btc"><span class="icon"></span>$<?php echo isset($data['btc_price']) ? $data['btc_price'] : ''; ?></p>
                 <p class="now-text">سعر البيتكوين في وقت النشر</p>
             </div>
         </div>
