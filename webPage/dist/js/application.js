@@ -333,7 +333,6 @@ window.onresize = function () {
 
 $(function () {
     if(window.android === 'android'){
-        window.AnswerApp = {};
         $('.app').show();
     }
 
