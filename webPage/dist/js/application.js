@@ -335,9 +335,6 @@ $(function () {
     if(window.android === 'android'){
         window.AnswerApp = {};
         $('.app').show();
-        window.AnswerApp.doShareLink = function (val) {
-            console.log(val)
-        };
     }
 
     $('.good-wrap').on('click', function () {
@@ -372,8 +369,8 @@ $(function () {
         }
     })
     //跳转
-    // $('.down-load').on('click', function () {
-    //     window.branch.deepviewCta();
-    // });
+    $('.down-load').on('click', function () {
+        window.branch.deepviewCta();
+    });
 });
 

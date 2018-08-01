@@ -28,6 +28,7 @@ $table_tag = $table_prefix.'terms';
 $table_tag_relationships = $table_prefix.'term_relationships';
 $table_postmeta = $table_prefix.'postmeta';
 $table_term_taxonomy = $table_prefix.'term_taxonomy';
+$table_yuzoviews = $table_prefix.'yuzoviews';
 
 $field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`,`post_author`';
 
@@ -39,9 +40,10 @@ $data['post'] = $post;
 $data['author'] = getAuthor($post['post_author']);
 $data['tags'] = getTags($post['ID']);
 $data['btc_price'] = getBtcPrice($post['ID']);
-$data['helped'] = gethelped($post['ID']);
-$data['unhelped'] = getUnHelped($post['ID']);
+// $data['helped'] = gethelped($post['ID']);
+// $data['unhelped'] = getUnHelped($post['ID']);
 $data['RecommendArticles'] = getRecommendArticles($post['ID']);
+$data['post_view'] = getPostView($post['ID']);
 
 function getAuthor($authorId)
 {
@@ -165,6 +167,18 @@ function catch_that_image($post_id) {
    }
 }
 
+function getPostView($ID)
+{
+    global $pdo,$table_yuzoviews;
+    $view = $pdo->query("SELECT * FROM $table_yuzoviews WHERE post_id={$ID} ")->fetch(PDO::FETCH_ASSOC);
+    if($view){
+        $view = (int) $view['views'];
+    }else{
+        $view = 0;
+    }
+    return $view;
+}
+
 ?>
 <head>
     <meta charset="UTF-8">
@@ -184,7 +198,7 @@ function catch_that_image($post_id) {
     <title><?php echo isset($data['post']['post_title']) ? $data['post']['post_title'] : ''; ?></title>
     <link rel="stylesheet" href="dist/css/application.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="dist/js/application.min.js"></script>
+    <script src="dist/js/application.js"></script>
 
 </head>
 <body>
@@ -198,9 +212,9 @@ function catch_that_image($post_id) {
                      data-original="https://yt3.ggpht.com/-SsPthNTlpnE/AAAAAAAAAAI/AAAAAAAAAAA/K1TGDVrueTo/s76-c-k-no-mo-rj-c0xffffff/photo.jpg"/>
                 <div class="user-name">
                     <p><?php echo isset($data['author']['user_nicename']) ? $data['author']['user_nicename'] : ''; ?></p>
-                    <p class="time">445646</p>
+                    <p class="time"><?php echo isset($data['post']['post_date_gmt']) ? $data['post']['post_date_gmt'] : ''; ?></p>
                 </div>
-                <span class="read-user">123</span>
+                <span class="read-user"><?php echo $data['post_view'] ?></span>
                 <i class="iconfont read-icon">&#xe75c;</i>
             </div>
             <!--正文部分 start-->
@@ -269,6 +283,11 @@ function catch_that_image($post_id) {
             
         </ul>
     </div>
+    <?php
+
+if($platform != 'android')
+{
+?>
     <div class="details-bottom">
           <div class="details-bottom-logo-wrap">
               <div class="details-bottom-logo"></div>
@@ -279,6 +298,9 @@ function catch_that_image($post_id) {
           </div>
           <div class="details-bottom-button down-load bold">تحميل الآن</div>
       </div>
+    <?php
+}
+?>
 </div>
 <textarea id="copy" style="position: absolute;top:-111111px"></textarea>
 </body>
