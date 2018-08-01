@@ -39,7 +39,7 @@
             </p>
             <p class="sharePage-footer-text">تعلم مجاناً على معلومات ذات الصلة بالبيتكوين ، لقد أصبحت خبير البيتكوين!
             </p>
-            <p class="sharePage-footer-button bold">تعلم مجاناً الآن
+            <p class="sharePage-footer-button bold down-load">تعلم مجاناً الآن
             </p>
         </div>
     </div>

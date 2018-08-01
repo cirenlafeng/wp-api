@@ -11,7 +11,11 @@ if(isset($_GET['ID']))
 }else{
    exit(json_encode(['status'=>400,'info'=>'error','data'=>'need post ID']));
 }
-
+$platform = '';
+if(isset($_GET['platform']))
+{
+   $platform = trim($_GET['platform']);
+}
 $userId = 0;
 if(isset($_GET['userId']))
 {
@@ -180,7 +184,7 @@ function catch_that_image($post_id) {
     <title><?php echo isset($data['post']['post_title']) ? $data['post']['post_title'] : ''; ?></title>
     <link rel="stylesheet" href="dist/css/application.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="dist/js/application.js"></script>
+    <script src="dist/js/application.min.js"></script>
 
 </head>
 <body>
@@ -200,10 +204,20 @@ function catch_that_image($post_id) {
                 <i class="iconfont read-icon">&#xe75c;</i>
             </div>
             <!--正文部分 start-->
+             <style type="text/css">
+                .container{
+                    margin:.2rem 0;
+                    color:#666;
+                    font-size:.16rem;
+                    line-height:.3rem;
+                    text-align:justify;
+                }
+            </style>
             <div class="container">
                 <?php echo isset($data['post']['post_content']) ? $data['post']['post_content'] : ''; ?>
             </div>
             <!--正文部分 end-->
+           
             <div class="now-btc-wrap">
                 <p class="now-btc"><span class="icon"></span>$<?php echo isset($data['btc_price']) ? $data['btc_price'] : ''; ?></p>
                 <p class="now-text">سعر البيتكوين في وقت النشر</p>
@@ -255,13 +269,16 @@ function catch_that_image($post_id) {
             
         </ul>
     </div>
-    <!--  <div class="details-bottom">
+    <div class="details-bottom">
           <div class="details-bottom-logo-wrap">
               <div class="details-bottom-logo"></div>
-              <div class="details-bottom-text">افتحي Hayaa للمشاركة في المزيد من المواضيع النسائية</div>
+              <div class="details-bottom-text">
+                  <h1 class="bold">افتح يا سمسم</h1>
+                  <h2>افتح باب ثروتك</h2>
+              </div>
           </div>
-          <div class="details-bottom-button down-load">فتح</div>
-      </div>-->
+          <div class="details-bottom-button down-load bold">تحميل الآن</div>
+      </div>
 </div>
 <textarea id="copy" style="position: absolute;top:-111111px"></textarea>
 </body>
@@ -283,5 +300,45 @@ function catch_that_image($post_id) {
 
     gtag('config', 'UA-105082350-2');
 </script>-->
+<?php
+
+if($platform != 'android')
+{
+?>
+<script>
+ (function (b, r, a, n, c, h, _, s, d, k) {
+        if (!b[n] || !b[n]._q) {
+            for (; s < _.length;) c(h, _[s++]);
+            d = r.createElement(a);
+            d.async = 1;
+            d.src = "https://cdn.branch.io/branch-latest.min.js";
+            k = r.getElementsByTagName(a)[0];
+            k.parentNode.insertBefore(d, k);
+            b[n] = h
+        }
+    })(window, document, "script", "branch", function (b, r) {
+        b[r] = function () {
+            b._q.push([r, arguments])
+        }
+    }, {
+        _q: [],
+        _v: 1
+    }, "addListener applyCode banner closeBanner creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode".split(" "), 0);
+    branch.init('key_live_covERTSNbjlwOW7mrnV9biloxEnRIviA');//替换这里的key
+    branch.deepview(
+        {
+            'channel': 'BGT_H5',
+            'feature': 'BGT_H5_download',
+            data: {
+                'feature': 'BGT'
+            }
+        }, {
+            'open_app': true
+        }
+    );
+</script>
+    <?php
+}
+?>
 </html>
 
