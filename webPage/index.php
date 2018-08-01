@@ -209,7 +209,7 @@ function getPostView($ID)
             <div class="head-wrap">
                 <img class="user-icon lazy"
                      src="dist/image/lazy-head-img.png"
-                     data-original="https://yt3.ggpht.com/-SsPthNTlpnE/AAAAAAAAAAI/AAAAAAAAAAA/K1TGDVrueTo/s76-c-k-no-mo-rj-c0xffffff/photo.jpg"/>
+                     data-original=""/>
                 <div class="user-name">
                     <p><?php echo isset($data['author']['user_nicename']) ? $data['author']['user_nicename'] : ''; ?></p>
                     <p class="time"><?php echo isset($data['post']['post_date_gmt']) ? $data['post']['post_date_gmt'] : ''; ?></p>
@@ -272,10 +272,12 @@ function getPostView($ID)
                 foreach ($data['RecommendArticles'] as $key => $value) {
             ?>
             <li class="clear">
+            <a href="/wp-api/webPage/index.php?ID=<?php echo $value['ID'];if($platform){echo '&platform='.$platform;}if($userId){echo '&userId='.$userId;} ?>">
             <div class="more-wrap-img"
                  style="background-image: url('<?php echo $value['first_img']; ?>')"></div>
             <p class="more-wrap-text"><?php echo $value['post_title']; ?></p>
             <p class="more-wrap-time"><?php echo $value['post_date_gmt']; ?></p>
+            </a>
             </li>
             <?php
                 }
