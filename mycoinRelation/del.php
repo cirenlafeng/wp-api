@@ -16,7 +16,7 @@ if(empty($deviceId))
 
 if(isset($_POST['fsym']))
 {
-	$fsym = (int) trim($_POST['fsym']);
+	$fsym = trim($_POST['fsym']);
 }
 if(empty($fsym))
 {
