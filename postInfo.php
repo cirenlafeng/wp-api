@@ -16,6 +16,7 @@ $table_tag = $table_prefix.'terms';
 $table_tag_relationships = $table_prefix.'term_relationships';
 $table_postmeta = $table_prefix.'postmeta';
 $table_term_taxonomy = $table_prefix.'term_taxonomy';
+$table_yuzoviews = $table_prefix.'yuzoviews';
 
 $field = '`ID`,`post_title`,`post_content`,`post_date_gmt`,`post_mime_type`,`post_author`';
 
@@ -30,6 +31,8 @@ $data['btc_price'] = getBtcPrice($post['ID']);
 $data['helped'] = gethelped($post['ID']);
 $data['unhelped'] = getUnHelped($post['ID']);
 $data['RecommendArticles'] = getRecommendArticles($post['ID']);
+$data['post_view'] = getPostView($post['ID']);
+$data['first_img'] = catch_that_image($post['ID']);
 
 echo json_encode(['status'=>200,'info'=>'success','data'=>$data]);
 
@@ -153,4 +156,16 @@ function catch_that_image($post_id) {
    }else{
       return "";
    }
+}
+
+function getPostView($ID)
+{
+    global $pdo,$table_yuzoviews;
+    $view = $pdo->query("SELECT * FROM $table_yuzoviews WHERE post_id={$ID} ")->fetch(PDO::FETCH_ASSOC);
+    if($view){
+        $view = (int) $view['views'];
+    }else{
+        $view = 0;
+    }
+    return $view;
 }
